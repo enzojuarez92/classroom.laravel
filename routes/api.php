@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('login', [LoginController::class, 'authenticate']);
+
+Route::controller(GradeController::class)->group(function(){
+    Route::get('grades','grades')->name('grades');
+    Route::post('create','create')->name('create');
+    Route::put('update/{grade}','update')->name('update');
+    Route::delete('delete/{grade}','delete')->name('delete');
 });
