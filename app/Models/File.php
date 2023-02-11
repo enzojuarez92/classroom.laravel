@@ -9,8 +9,16 @@ class File extends Model
 {
     use HasFactory;
 
-    public function fileable()
+    protected $guarded = [];
+
+
+    public function users()
     {
-        return $this->morphTo();
+        return $this->belongsToMany(User::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
     }
 }

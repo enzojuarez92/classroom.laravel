@@ -9,6 +9,9 @@ class Section extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+
     public function grades()
     {
         return $this->belongsToMany(Grade::class);

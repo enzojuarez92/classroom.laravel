@@ -9,6 +9,9 @@ class Subject extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+
     public function grade()
     {
         return $this->belongsTo(Grade::class);
@@ -16,6 +19,6 @@ class Subject extends Model
 
     public function files()
     {
-        return $this->morphMany(File::class, 'fileable');
+        return $this->hasMany(File::class);
     }
 }

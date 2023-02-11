@@ -8,20 +8,26 @@ use Illuminate\Http\Request;
 
 class GradeController extends Controller
 {
+    public function show(Grade $grade)
+    {
+        try{
+            $grade = Grade::find($grade);
+
+            return response()->json($grade);
+
+        } catch(Exception $e){
+            return response()->json($e->getMessage());
+        }
+    }
     public function grades()
     {
         try{
-
             $grades = Grade::all();
 
-            if($grades){
-                return response()->json(['grades' => $grades]);
-            } else {
-                return response()->json(['message' => 'No hay grados registrados!']);
-            }
+            return response()->json($grades);
 
         } catch(Exception $e){
-            return response()->json(['error' => $e->getMessage()]);
+            return response()->json($e->getMessage());
         }
     }
 
@@ -30,7 +36,7 @@ class GradeController extends Controller
         try{
 
             $req->validate([
-                'grade' => 'required | min:1 | max:2 | unique:grades'
+                'grade' => 'required | min:1 | max:2 | unique:grades,grade'
             ]); 
 
             $grade = Grade::create($req->all());
@@ -49,7 +55,7 @@ class GradeController extends Controller
     {        
         try {
             $req->validate([
-                'grade' => 'required | min:1 | max:2 | unique:grades'
+                'grade' => 'required | min:1 | max:2 | unique:grades,grade'
             ]);
 
             $grade->update($req->all());
@@ -58,23 +64,20 @@ class GradeController extends Controller
                 'message' => 'Grado actualizado correctamente',
                 $grade,
             ]);
-
         } catch (Exception $e) {
-            return response()->json(['errors' => $e->getMessage(), 500]);
+            return response()->json($e->getMessage(), 500);
         }
     }
 
     public function delete(Grade $grade)
     {
         try {
-            if($grade){
-                $grade->delete();
-    
-                return response()->json([
-                    'message' => 'Grado eliminado correctamente',
-                    $grade,
-                ]);
-            } 
+            $grade->delete();
+
+            return response()->json([
+                'message' => 'Grado eliminado correctamente',
+                $grade,
+            ]);            
         } catch (Exception $e) {
             return response()->json(['errors' => $e->getMessage(), 500]);
         }

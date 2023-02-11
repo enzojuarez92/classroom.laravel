@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('subjects', function (Blueprint $table) {
-            $table->unsignedBigInteger('grade_id')->after('subject');
+        Schema::table('files', function (Blueprint $table) {
+            $table->unsignedBigInteger('subject_id')->after('url');
 
-            $table->foreign('grade_id')->references('id')->on('grades')
+            $table->foreign('subject_id')->references('id')->on('subjects')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('subjects', function (Blueprint $table) {
+        Schema::table('files', function (Blueprint $table) {
             //
         });
     }

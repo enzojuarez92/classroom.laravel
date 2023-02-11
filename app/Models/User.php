@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -17,11 +18,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
+
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -59,6 +62,45 @@ class User extends Authenticatable
 
     public function files()
     {
-        return $this->morphMany(File::class, 'fileable');
+        return $this->belongsToMany(File::class);
     }
+
+    public function name(): Attribute{
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+    }
+
+    public function lastname(): Attribute{
+        return new Attribute(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+    }
+
+    public function email(): Attribute{
+        return new Attribute(
+            set: fn($value) => strtolower($value)
+        );
+    }
+
+    public function username(): Attribute{
+        return new Attribute(
+            set: fn($value) => strtolower($value)
+        );
+    }
+
+    public function role(): Attribute{
+        return new Attribute(
+            set: fn($value) => strtolower($value)
+        );
+    }
+
+    // public function password(): Attribute{
+    //     return new Attribute(
+    //         get: fn($value) => bcrypt($value),
+    //         set: fn($value) => bcrypt($value)
+    //     );
+    // }
 }

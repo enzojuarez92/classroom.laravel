@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('filename');
             $table->string('type');
             $table->string('url');
-
-            $table->morphs('fileable');
             
             $table->timestamps();
         });
