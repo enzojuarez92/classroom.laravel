@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('user', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('section_id')->after('avatar');
+
+            $table->foreign('section_id')->references('id')->on('sections')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
@@ -25,12 +29,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('user', function (Blueprint $table) {
-            $table->unsignedBigInteger('section_id')->after('avatar');
-
-            $table->foreign('section_id')->references('id')->on('sections')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };
