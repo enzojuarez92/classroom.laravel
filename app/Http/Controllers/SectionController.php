@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grade;
 use App\Models\Section;
 use Exception;
 use Illuminate\Http\Request;
@@ -36,10 +37,10 @@ class SectionController extends Controller
         try{
 
             $req->validate([
-                'section' => 'required | min:1 | max:2 | unique:sections,section'
+                'section' => 'required | min:1 | max:10 | unique:sections,section'
             ]); 
 
-            $section = Section::create($req->all());
+            $section = Section::create(["section" => $req->section]);
 
             return response()->json([
                 'message' => 'Sección creada correctamente',

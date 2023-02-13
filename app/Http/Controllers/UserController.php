@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\Grade;
+use App\Models\Section;
 use App\Models\User;
 use Exception;
 
@@ -48,6 +49,7 @@ class UserController extends Controller
                 'password' => bcrypt($req->password),
                 'role' => $req->role,
                 'avatar' => $req->avatar,
+                'section_id' => $req->section_id
             ]);
 
             $user->grades()->attach($grade);

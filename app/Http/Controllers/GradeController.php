@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grade;
+use App\Models\Section;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -38,8 +39,14 @@ class GradeController extends Controller
             $req->validate([
                 'grade' => 'required | min:1 | max:2 | unique:grades,grade'
             ]); 
+            
+            $section = Section::find($req->section_id);
 
-            $grade = Grade::create($req->all());
+            $grade = Grade::create([
+                'grade' => $req->grade
+            ]);
+
+            $grade->sections()->attach($section);
 
             return response()->json([
                 'message' => 'grado creado correctamente',
