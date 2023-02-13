@@ -40,7 +40,7 @@ class GradeController extends Controller
                 'grade' => 'required | min:1 | max:2 | unique:grades,grade'
             ]); 
             
-            $section = Section::find($req->section_id);
+            $section = Section::find($req->section);
 
             $grade = Grade::create([
                 'grade' => $req->grade
